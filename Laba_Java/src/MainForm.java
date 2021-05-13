@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableModel;
 
-public class TableData {
+public class MainForm extends JFrame {
     private JFrame cinemaList;
     private DefaultTableModel model;
     JMenuBar menuBar;
@@ -35,7 +35,7 @@ public class TableData {
     private JTextField cinemaName;
     private JButton filter;
 
-    public void show() {
+    public MainForm(DataTable dat) {
         this.cinemaList = new JFrame("List of films");
         this.cinemaList.setSize(700, 500);
         this.cinemaList.setLocation(200, 100);
