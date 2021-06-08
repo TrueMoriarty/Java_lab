@@ -5,7 +5,7 @@ import javax.xml.crypto.Data;
 
 public class DataTable {
     public static String[] columns = {"ID", "Director", "Name", "Year", "Rating"};
-    public static Boolean[] AscendingColumn = {false, false, false, true, true};
+    private static Boolean[] AscendingColumn = {false, false, false, true, true};
     public static String[] ColumnValuesDefault = {"Director", "Name", "Year", "Rating"};
 
     public DataTable() {
