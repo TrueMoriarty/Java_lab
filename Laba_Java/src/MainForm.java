@@ -16,8 +16,8 @@ public class MainForm extends JFrame {
     JMenuItem openMenu;
     JMenuItem addMenu;
     JMenuItem exitMenu;
-
-    private JFrame cinemaList;
+    JMenuItem importXMLMenu;
+    JMenuItem exportXMLMenu;
 
     //toolbar
     private JToolBar toolBar;
@@ -56,33 +56,38 @@ public class MainForm extends JFrame {
         saveMenu = new JMenuItem("Save");
         addMenu = new JMenuItem("Add");
         exitMenu = new JMenuItem("Exit");
+        importXMLMenu = new JMenuItem("Import XML");
+        exportXMLMenu = new JMenuItem("Export XML");
 
         fileMenu.add(openMenu);
         fileMenu.add(saveMenu);
         fileMenu.add(addMenu);
+        fileMenu.addSeparator();
+        fileMenu.add(importXMLMenu);
+        fileMenu.add(exportXMLMenu);
         fileMenu.addSeparator();
         fileMenu.add(exitMenu);
 
         //add menu
         menuBar.add(fileMenu);
         menuBar.add(Box.createHorizontalGlue());
-        cinemaList.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
 
         //toolbar buttons
-        saveButton = new JButton(new ImageIcon("./images/save.png"));
-        loadButton = new JButton(new ImageIcon("./images/load.png"));
-        addButton = new JButton(new ImageIcon("./images/add.png"));
-        removeButton = new JButton(new ImageIcon("./images/remove.png"));
+        saveButton = new JButton(new ImageIcon("./img/save.png"));
+        loadButton = new JButton(new ImageIcon("./img/load.png"));
+        addButton = new JButton(new ImageIcon("./img/add.png"));
+        removeButton = new JButton(new ImageIcon("./img/remove.png"));
 
         saveButton.setBorderPainted(false);
         loadButton.setBorderPainted(false);
         addButton.setBorderPainted(false);
         removeButton.setBorderPainted(false);
 
-        saveButton.setPreferredSize(new Dimension(32, 32));
-        loadButton.setPreferredSize(new Dimension(32, 32));
-        addButton.setPreferredSize(new Dimension(32, 32));
-        removeButton.setPreferredSize(new Dimension(32, 32));
+        saveButton.setPreferredSize(new Dimension(35, 35));
+        loadButton.setPreferredSize(new Dimension(35, 35));
+        addButton.setPreferredSize(new Dimension(35, 35));
+        removeButton.setPreferredSize(new Dimension(35, 35));
 
         saveButton.setToolTipText("Save Movie List");
         loadButton.setToolTipText("Upload a movie");
@@ -122,10 +127,10 @@ public class MainForm extends JFrame {
 
         // table
         model = new DefaultTableModel(new String[][] {
-                {"1","1","1","1","1","1"},
-                {"2","2","2","2","2","2"},
-                {"3","1","2","2","2","3"},
-                {"4","1","2","2","2","5"}}, DataTable.columns) {
+                {"1","A","1","1","1","1"},
+                {"2","C","2","2","2","2"},
+                {"3","B","2","2","2","3"},
+                {"4","D","2","2","2","5"}}, DataTable.columns) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -268,7 +273,7 @@ public class MainForm extends JFrame {
     }
 
     void Add() {
-        model.addRow(data.AddRow(DataTable.ColumnValuesDefault));
+        model.addRow(data.AddRow(DataTable.defaultColumnValues));
     }
 
     void Delete() {
