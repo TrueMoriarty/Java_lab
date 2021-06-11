@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Class used to load table data from XML save file
- * @author Arlsn
+ * @author Arslan
  */
 public class XMLImporter extends JFrame{
     /**

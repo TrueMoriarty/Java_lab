@@ -1,3 +1,6 @@
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -10,9 +13,9 @@ import javax.xml.crypto.Data;
 
 public class DataTable {
 
-    public static String[] columns = {"ID", "Performer", "Album", "Year", "Rating", "Quantity"};
+    public static String[] columns = {"ID", "Producer", "Name", "Year", "Rating", "Fees"};
     private static Boolean[] columnAscending = {false, false, false, true, true, true};
-    public static String[] defaultColumnValues = {"Performer", "Album", "Year", "Rating", "Quantity"};
+    public static String[] defaultColumnValues = { "Producer", "Name", "Year", "Rating", "Fees"};
 
     public static class Line{
         Object[] data;
@@ -80,6 +83,35 @@ public class DataTable {
                 record.setAttribute(columns[i], dat);
             }
             return nod;
+        }
+
+        /**
+         * Add line to pdf table
+         * @param pdfTable - target table
+         * @param font - line font
+         */
+        public void AddToPdfTable(PdfPTable pdfTable, Font font)
+        {
+            for(int i =0; i < data.length; i++)
+            {
+                String dat = (data[i] == null? "" : data[i].toString());
+                pdfTable.addCell(new Phrase(dat, font));
+            }
+        }
+
+        /**
+         * Get html code corresponding one row in \<table\>
+         * @return
+         */
+        public String GetHTMLTableString()
+        {
+            String res = "<tr>";
+            for(int i = 0; i < data.length; i++)
+            {
+                String dat = (data[i] == null? "" : data[i].toString());
+                res+= "<td>" + dat;
+            }
+            return res;
         }
     }
 

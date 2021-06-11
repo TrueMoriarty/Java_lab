@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class MainForm extends JFrame {
     //top menu
@@ -18,6 +19,8 @@ public class MainForm extends JFrame {
     JMenuItem exitMenu;
     JMenuItem importXMLMenu;
     JMenuItem exportXMLMenu;
+    JMenuItem exportPDFMenu;
+    JMenuItem exportHTMLMenu;
 
     //toolbar
     private JToolBar toolBar;
@@ -58,6 +61,8 @@ public class MainForm extends JFrame {
         exitMenu = new JMenuItem("Exit");
         importXMLMenu = new JMenuItem("Import XML");
         exportXMLMenu = new JMenuItem("Export XML");
+        exportPDFMenu = new JMenuItem("Export PDF");
+        exportHTMLMenu = new JMenuItem("Export HTML");
 
         fileMenu.add(openMenu);
         fileMenu.add(saveMenu);
@@ -66,7 +71,11 @@ public class MainForm extends JFrame {
         fileMenu.add(importXMLMenu);
         fileMenu.add(exportXMLMenu);
         fileMenu.addSeparator();
+        fileMenu.add(exportPDFMenu);
+        fileMenu.add(exportHTMLMenu);
+        fileMenu.addSeparator();
         fileMenu.add(exitMenu);
+
 
         //add menu
         menuBar.add(fileMenu);
@@ -84,10 +93,10 @@ public class MainForm extends JFrame {
         addButton.setBorderPainted(false);
         removeButton.setBorderPainted(false);
 
-        saveButton.setPreferredSize(new Dimension(35, 35));
-        loadButton.setPreferredSize(new Dimension(35, 35));
-        addButton.setPreferredSize(new Dimension(35, 35));
-        removeButton.setPreferredSize(new Dimension(35, 35));
+        saveButton.setPreferredSize(new Dimension(35, 25));
+        loadButton.setPreferredSize(new Dimension(35, 25));
+        addButton.setPreferredSize(new Dimension(35, 25));
+        removeButton.setPreferredSize(new Dimension(35, 25));
 
         saveButton.setToolTipText("Save Movie List");
         loadButton.setToolTipText("Upload a movie");
@@ -219,6 +228,26 @@ public class MainForm extends JFrame {
             }
         });
 
+        importXMLMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LoadXML();
+            }});
+
+        exportXMLMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SaveXML();
+            }});
+
+        exportPDFMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportPDF();
+            }});
+
+        exportHTMLMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportHTML();
+            }});
+
         //data init
         if (dat == null)
             data = new DataTable(model);
@@ -287,6 +316,40 @@ public class MainForm extends JFrame {
 
     void Sort() {
         viewData.Sort(sortParamBox.getSelectedIndex()).SetDataInTable(model);
+    }
+
+    private void TryLoadData(DataTable newData)
+    {
+        if(newData != null)
+        {
+            viewData = data = newData;
+            viewData.SetDataInTable(model);
+        }
+    }
+
+    private void LoadXML()
+    {
+        TryLoadData(new XMLImporter().ReadData());
+    }
+
+
+    private void SaveXML()
+    {
+        try {
+            new XMLExporter(data);
+        } catch (ParserConfigurationException e) {
+            JOptionPane.showMessageDialog(null, "XML parser error occured!");
+        }
+    }
+
+    private void ExportPDF()
+    {
+        new PDFExporter(data);
+    }
+
+    private void ExportHTML()
+    {
+        new HTMLExporter(data);
     }
 
     void Exit() {

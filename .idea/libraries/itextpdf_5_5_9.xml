@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="itextpdf-5_5_9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Laba_Java/itextpdf-5_5_9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
